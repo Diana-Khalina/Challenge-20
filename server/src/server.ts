@@ -11,7 +11,7 @@ app.use(express.json());
 
 // Serves static files in the entire client's dist folder
 app.use(express.static('../client/dist'));
-
+//test
 app.use(routes);
 
 db.once('open', () => {
