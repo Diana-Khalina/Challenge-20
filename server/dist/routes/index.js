@@ -10,4 +10,5 @@ router.use('/api', apiRoutes);
 router.use((_req, res) => {
     res.sendFile(path.join(__dirname, '../../../client/dist/index.html'));
 });
+//export
 export default router;
