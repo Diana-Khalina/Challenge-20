@@ -1,9 +1,9 @@
 # Name of workflow
-name: Lint and Test workflow
+name: Dev Test workflow
 
-# Trigger workflow on all pull requests
+# Trigger workflow on push and pull requests
 on:
-  pull_request:
+   pull_request:
     branches:
       - develop
       - staging
@@ -14,29 +14,47 @@ jobs:
     # Operating system to run job on
     runs-on: ubuntu-latest
 
+    services:
+      mongodb:
+        image: mongo:5.0
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongo --eval 'db.runCommand({ ping: 1 })'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
+
     # Steps in job
     steps:
       # Get code from repo
-      - name: Checkout code
-        uses: actions/checkout@v1
+      - name: 🧑‍💻 Checkout code
+        uses: actions/checkout@v3
 
-      - name: Use Node.js 21.x
-        uses: actions/setup-node@v1
+      - name: 🟢 Use Node.js 21.x
+        uses: actions/setup-node@v3
         with:
           node-version: 21.x
 
       # Install dependencies
       - name: 🧰 Install Deps
         run: npm install
-        
-      # Run lint
-      - name: Run Lint
-        run: npm run lint
 
-      # Run build
-      - name: Run Build
+      # Run the build
+      - name: 🛠️ Build
         run: npm run build
 
-      # Run tests
-      - name: Run Tests
-        run: npm run test
+      # Start the server
+      - name: 🏎️ Start Server
+        run: npm run start &
+        env:
+          PORT: 3001
+          MONGODB_URI: mongodb://127.0.0.1:27017/techquiz
+
+      # Wait for the server to be ready
+      - name: 🕜 Wait for Server
+        run: npx wait-on http://localhost:3001
+
+      # Run Cypress tests
+      - name: 🧪 Run Cypress Tests
+        run: npm run test-component 
