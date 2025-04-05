@@ -24,7 +24,7 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^4.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
     "vitest": "^2.0.3"
   }
 }
