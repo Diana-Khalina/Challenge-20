@@ -15,5 +15,17 @@
   GitHub Actions for deployments
   ![AutoQuizActions Screenshot](./src/rendertest.png)
 
+## Tech Stack
+
+- **GitHub Actions** — CI/CD automation
+- **Cypress** — End-to-end/component testing
+- **Render** — Deployment platform
+- **Node.js, npm** — Dependency management
+
+## License
+
+This project is open-source and available under the **MIT License**.
+
+
   
   
